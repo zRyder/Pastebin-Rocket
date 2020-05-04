@@ -15,7 +15,10 @@ use std::fs::File;
 
 fn main()
 {
-    rocket::ignite().mount("/", routes![index, upload, retrieve]).launch();
+    rocket::ignite()
+        .mount("/", routes![index, upload, retrieve])
+        .mount("/remove", routes![delete])
+        .launch();
 }
 
 #[get("/")]
@@ -51,4 +54,16 @@ fn retrieve(id: PasteId) -> Option<File>
 {
     let filename =  format!("upload/{id}", id=id);
     File::open(&filename).ok()
+}
+
+#[delete("/<id>")]
+fn delete(id: PasteId) -> String
+{
+    let filename = format!("upload/{id}", id = id);
+    match std::fs::remove_file(&filename)
+    {
+        Ok(f) => format!("{} Removed\n", &filename),
+        Err(e) => format!("Something went wrong {}\n", e)
+    }
+
 }

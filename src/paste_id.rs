@@ -11,15 +11,18 @@ const BASE62: &[u8] = b"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrst
 /// A _probably_ unique paste ID.
 pub struct PasteId<'a>(Cow<'a, str>);
 
-impl<'a> PasteId<'a> {
+impl<'a> PasteId<'a>
+{
     /// Generate a _probably_ unique ID with `size` characters. For readability,
     /// the characters used are from the sets [0-9], [A-Z], [a-z]. The
     /// probability of a collision depends on the value of `size` and the number
     /// of IDs generated thus far.
-    pub fn new(size: usize) -> PasteId<'static> {
+    pub fn new(size: usize) -> PasteId<'static>
+    {
         let mut id = String::with_capacity(size);
         let mut rng = rand::thread_rng();
-        for _ in 0..size {
+        for _ in 0..size
+        {
             id.push(BASE62[rng.gen::<usize>() % 62] as char);
         }
 
@@ -27,26 +30,32 @@ impl<'a> PasteId<'a> {
     }
 }
 
-impl<'a> fmt::Display for PasteId<'a> {
+impl<'a> fmt::Display for PasteId<'a>
+{
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}", self.0)
     }
 }
 
-fn valid_id(id: &str) -> bool {
-    id.chars().all(|c| {
+fn valid_id(id: &str) -> bool
+{
+    id.chars().all(|c|
+        {
         (c >= 'a' && c <= 'z')
             || (c >= 'A' && c <= 'Z')
             || (c >= '0' && c <= '9')
-    })
+        })
 }
 
 
-impl<'a> FromParam<'a> for PasteId<'a> {
+impl<'a> FromParam<'a> for PasteId<'a>
+{
     type Error = &'a RawStr;
 
-    fn from_param(param: &'a RawStr) -> Result<PasteId<'a>, &'a RawStr> {
-        match valid_id(param) {
+    fn from_param(param: &'a RawStr) -> Result<PasteId<'a>, &'a RawStr>
+    {
+        match valid_id(param)
+        {
             true => Ok(PasteId(Cow::Borrowed(param))),
             false => Err(param)
         }

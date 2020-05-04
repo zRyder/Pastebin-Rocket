@@ -35,6 +35,9 @@ fn index() -> &'static str
       GET /<id>
 
           retrieves the content for the paste with id `<id>`
+      DELETE /remove/<id>
+          Will remove a paste file if given `<id>` exists
+
     "
 }
 

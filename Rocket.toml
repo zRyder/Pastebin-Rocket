@@ -13,7 +13,7 @@ log = "normal"
 limits = { forms = 32768 }
 
 [production]
-address = "www.rocketswordshare.com"
+address = "35.186.164.65"
 port = 80
 keep_alive = 5
 log = "critical"

@@ -13,7 +13,7 @@ log = "normal"
 limits = { forms = 32768 }
 
 [production]
-address = "localhost"
+address = "10.150.0.6"
 port = 1337
 keep_alive = 5
 log = "critical"

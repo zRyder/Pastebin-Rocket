@@ -46,7 +46,7 @@ fn upload(paste: Data) -> Result<String, std::io::Error>
 {
     let id = PasteId::new(3);
     let filename = format!("upload/{id}", id = id);
-    let url = format!("{host}/{id}\n", host = "http://rocketswordshare.com", id = id);
+    let url = format!("{host}/{id}\n", host = "http://35.245.157.228", id = id);
 
     paste.stream_to_file(Path::new(&filename))?;
     Ok(url)
